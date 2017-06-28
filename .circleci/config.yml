@@ -1,0 +1,34 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: lsage/ci-env:latest
+    working_directory: /home/circleci/ci
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install Dependencies
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: Compile source code
+          command: npm run -s compile
+      - run:
+          name: Setup
+          command: which lsci
+      - run:
+          name: Run tests
+          command: lsci test
+      - run:
+          name: Generate API docs
+          command: lsci docs
+      - run:
+          name: Check API docs coverage
+          command: lsci docs:coverage
+
+      # Deployment
