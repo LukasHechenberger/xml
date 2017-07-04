@@ -1,6 +1,8 @@
 import Parser from './lib/Parser';
 import Builder from './lib/Builder';
 
+export { Parser, Builder };
+
 export function parse(xml, options) {
   return (new Parser(options)).parse(xml);
 }

@@ -9,7 +9,7 @@
     "docs": "esdoc",
     "lint": "eslint src/**/*.js",
     "prepublishOnly": "npm run -s compile && npm run -s docs",
-    "test": "mocha test/**/*.spec.js"
+    "test": "mocha test/*.spec.js test/**/*.spec.js"
   },
   "repository": {
     "type": "git",
