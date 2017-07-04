@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/lib/Parser.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/LukasHechenberger/xml" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-build">build</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-parse">parse</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">lib</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/lib/Builder.js~Builder.html">Builder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/lib/Parser.js~Parser.html">Parser</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">lib/dom</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/lib/dom/CDataSection.js~CDataSection.html">CDataSection</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/lib/dom/Document.js~Document.html">Document</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/lib/dom/Element.js~ClassList.html">ClassList</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/lib/dom/Element.js~Element.html">Element</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/lib/dom/Node.js~Node.html">Node</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/lib/dom/TextNode.js~TextNode.html">TextNode</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/lib/Parser.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { parser as createParser } from &apos;sax&apos;;
+import Node from &apos;./dom/Node&apos;;
+import Document from &apos;./dom/Document&apos;;
+import Element from &apos;./dom/Element&apos;;
+import TextNode from &apos;./dom/TextNode&apos;;
+import CDataSection from &apos;./dom/CDataSection&apos;;
+
+const parsed = originalClass =&gt; class extends originalClass {
+
+  constructor(nodeOptions, parser) {
+    super(nodeOptions);
+
+    this._position = parser.currentPosition;
+  }
+
+  get [Node.info]() {
+    return Object.assign(this._position, super[Node.info]);
+  }
+
+};
+
+const ParsedElement = parsed(Element);
+const ParsedTextNode = parsed(TextNode);
+const ParsedCDataSection = parsed(CDataSection);
+
+export default class Parser {
+
+  constructor(options = {}) {
+    this._options = Object.assign({}, Parser.defaultOptions, options);
+    this._parser = createParser(this._options);
+
+    this._parser.onprocessinginstruction = this.onProcessingInstruction.bind(this);
+    this._parser.ontext = this.onText.bind(this);
+    this._parser.onopentag = this.onOpenTag.bind(this);
+    this._parser.onclosetag = this.onCloseTag.bind(this);
+    this._parser.oncdata = this.onCData.bind(this);
+
+    this._processingInstructions = [];
+    this._currentElement = null;
+    this._rootElement = null;
+
+    // TODO: Remove
+    this._indent = 0;
+  }
+
+  parse(string) {
+    return new Promise((resolve, reject) =&gt; {
+      this._parser.onerror = err =&gt; reject(err);
+
+      this._parser.write(string);
+      this._parser.close();
+
+      resolve(new Document({
+        root: this._rootElement,
+        processingInstructions: this._processingInstructions,
+      }));
+    });
+  }
+
+  get currentPosition() {
+    return {
+      line: this._parser.line,
+      column: this._parser.column,
+      position: this._parser.position,
+    };
+  }
+
+  onProcessingInstruction(pi) {
+    this._processingInstructions.push(pi);
+    console.log(&apos;&lt;?&apos; + pi.name, pi.body, &apos;?&gt;&apos;);
+  }
+
+  onText(text) {
+    if (text.trim().length &gt; 0) {
+      if (!this._currentElement) {
+        throw new Error(&apos;Found text node outside an element&apos;);
+      }
+
+      this._currentElement.appendChild(new ParsedTextNode({
+        parent: this._currentElement,
+        text,
+      }, this));
+
+      console.log(&apos;  &apos;.repeat(this._indent) + &apos;#text&apos;);
+    }
+    // console.log(&apos;TEXT&apos;, text);
+  }
+
+  onOpenTag(tag) {
+    const elm = new ParsedElement(Object.assign(tag, {
+      parent: this._currentElement,
+    }), this);
+
+    if (this._currentElement) {
+      this._currentElement.appendChild(elm);
+    } else {
+      if (this._rootElement) {
+        throw new Error(&apos;Found second root element&apos;);
+      }
+
+      this._rootElement = elm;
+    }
+
+    this._currentElement = elm;
+    console.log(&apos;  &apos;.repeat(this._indent++) + &apos;&lt;&apos; + tag.name + &apos;&gt;&apos;);
+  }
+
+  onCloseTag(tag) {
+    this._currentElement = this._currentElement.parentNode;
+    console.log(&apos;  &apos;.repeat(--this._indent) + &apos;&lt;/&apos; + tag + &apos;&gt;&apos;);
+  }
+
+  onCData(cdata) {
+    this._currentElement.appendChild(new ParsedCDataSection({
+      parent: this._currentElement,
+      text: cdata,
+    }, this));
+    console.log(&apos;  &apos;.repeat(this._indent) + &apos;#cdata&apos;, cdata);
+  }
+
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
