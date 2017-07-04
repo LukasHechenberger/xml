@@ -8,7 +8,7 @@
     "compile:watch": "npm run -s compile -- --watch",
     "docs": "esdoc",
     "prepublishOnly": "npm run -s compile && npm run -s docs",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "test": "mocha test/**/*.spec.js"
   },
   "repository": {
     "type": "git",
@@ -31,9 +31,12 @@
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-preset-env": "^1.5.2",
+    "babel-register": "^6.24.1",
     "esdoc": "^0.5.2",
     "eslint": "^4.0.0",
-    "eslint-config-lsage": "^0.1.0"
+    "eslint-config-lsage": "^0.2.0",
+    "mocha": "^3.4.2",
+    "unexpected": "^10.31.0"
   },
   "eslintConfig": {
     "extends": "lsage"
