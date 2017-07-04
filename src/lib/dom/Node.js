@@ -22,6 +22,12 @@ export default class Node {
     return this._parent;
   }
 
+  cloneNode() {
+    return Object.assign(Object.create(this), this, {
+      _parent: null,
+    });
+  }
+
   * [recursiveChildNodes]() {
     if (!this._childNodes) { return; }
 
