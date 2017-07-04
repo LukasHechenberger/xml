@@ -29,6 +29,10 @@ export default class Builder {
   }
 
   build(doc) {
+    if (!doc || !doc[build]) {
+      throw new Error('Not a document instance');
+    }
+
     return doc[build](Object.assign({}, this._options, { level: 0 }));
   }
 
