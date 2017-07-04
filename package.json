@@ -40,7 +40,14 @@
   },
   "babel": {
     "presets": [
-      "env"
+      [
+        "env",
+        {
+          "targets": {
+            "node": 6
+          }
+        }
+      ]
     ]
   },
   "dependencies": {
