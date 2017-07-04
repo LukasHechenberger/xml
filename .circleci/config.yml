@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: lsage/ci-env:latest
+      - image: circleci/node:6
     working_directory: /home/circleci/ci
     steps:
       - checkout
@@ -19,16 +19,13 @@ jobs:
           name: Compile source code
           command: npm run -s compile
       - run:
-          name: Setup
-          command: which lsci
-      - run:
           name: Run tests
-          command: lsci test
+          command: npm run -s test
       - run:
           name: Generate API docs
-          command: lsci docs
-      - run:
-          name: Check API docs coverage
-          command: lsci docs:coverage
+          command: npm run -s docs
+      # - run:
+      #     name: Check API docs coverage
+      #     command: lsci docs:coverage
 
       # Deployment
