@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.3"></a>
+## [0.1.3](https://github.com/ls-age/xml/compare/v0.1.2...v0.1.3) (2017-07-04)
+
+
+### Features
+
+* **Parser:** Fail without document element ([6babc8e](https://github.com/ls-age/xml/commit/6babc8e))
+
+
+
 <a name="0.1.2"></a>
 ## [0.1.2](https://github.com/ls-age/xml/compare/v0.1.1...v0.1.2) (2017-07-04)
 
