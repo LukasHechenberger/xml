@@ -25,6 +25,12 @@ const ParsedCDataSection = parsed(CDataSection);
 
 export default class Parser {
 
+  static get defaultOptions() {
+    return {
+      strict: true,
+    };
+  }
+
   constructor(options = {}) {
     this._options = Object.assign({}, Parser.defaultOptions, options);
     this._parser = createParser(this._options);
@@ -49,6 +55,10 @@ export default class Parser {
 
       this._parser.write(string);
       this._parser.close();
+
+      if (this._rootElement === null) {
+        reject(new Error('No document element'));
+      }
 
       resolve(new Document({
         root: this._rootElement,
