@@ -32,3 +32,9 @@ jobs:
       #     command: lsci docs:coverage
 
       # Deployment
+      - deploy:
+          name: Upload docs
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              $(npm -s bin)/esdoc-uploader
+            fi
