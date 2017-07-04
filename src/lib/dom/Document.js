@@ -18,6 +18,12 @@ export default class Document extends Node {
     });
   }
 
+  // Node overrides
+
+  get textContent() {
+    return null;
+  }
+
   // Additional methods
 
   get documentElement() {

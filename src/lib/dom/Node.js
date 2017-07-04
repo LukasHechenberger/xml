@@ -22,6 +22,31 @@ export default class Node {
     return this._parent;
   }
 
+  removeChild(node) {
+    const i = this._childNodes.indexOf(node);
+
+    if (i < 0) {
+      throw new Error('Not a child node');
+    }
+
+    this._childNodes.splice(i, 1);
+
+    return node;
+  }
+
+  appendChild(node) {
+    if (node.parentNode) {
+      node.parentNode.removeChild(node);
+    }
+
+    this._childNodes.push(node);
+    Object.assign(node, { _parent: this });
+  }
+
+  get textContent() {
+    return this._childNodes.map(n => n.textContent).join('') || '';
+  }
+
   cloneNode() {
     return Object.assign(Object.create(this), this, {
       _parent: null,

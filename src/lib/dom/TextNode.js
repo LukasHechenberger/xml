@@ -9,7 +9,6 @@ export default class TextNode extends Node {
     this._text = options.text;
   }
 
-  // TODO: Remove
   get textContent() {
     return this._text;
   }
