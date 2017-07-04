@@ -1,5 +1,3 @@
-import prettify from 'prettify-xml';
-
 const build = Symbol('Builder.build');
 const selfClosing = Symbol('Builder.isSelfClosing');
 
@@ -31,13 +29,7 @@ export default class Builder {
   }
 
   build(doc) {
-    const xml = doc[build](Object.assign({}, this._options, { level: 0 }));
-
-    /* if (this._options) {
-      return prettify(xml, this._options);
-    } */
-
-    return xml;
+    return doc[build](Object.assign({}, this._options, { level: 0 }));
   }
 
 }
