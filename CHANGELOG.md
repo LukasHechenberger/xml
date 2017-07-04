@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.5"></a>
+## [0.1.5](https://github.com/ls-age/xml/compare/v0.1.4...v0.1.5) (2017-07-04)
+
+
+### Bug Fixes
+
+* Use system newline as default ([6f0a26e](https://github.com/ls-age/xml/commit/6f0a26e))
+
+
+### Features
+
+* Export Builder and Parser class ([41daee0](https://github.com/ls-age/xml/commit/41daee0))
+
+
+
 <a name="0.1.4"></a>
 ## [0.1.4](https://github.com/ls-age/xml/compare/v0.1.3...v0.1.4) (2017-07-04)
 
