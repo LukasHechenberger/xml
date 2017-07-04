@@ -1,3 +1,5 @@
+import { EOL } from 'os';
+
 const build = Symbol('Builder.build');
 const selfClosing = Symbol('Builder.isSelfClosing');
 
@@ -11,7 +13,7 @@ export default class Builder {
   }
 
   static get defaultNewline() {
-    return '\\n\n';
+    return EOL;
   }
 
   constructor(options = {}) {
