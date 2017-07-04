@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LukasHechenberger/xml.git"
+    "url": "git+https://github.com/ls-age/xml.git"
   },
   "keywords": [
     "XML",
@@ -24,11 +24,10 @@
   ],
   "author": "Lukas Hechenberger <npm@ls-age.com>",
   "license": "MIT",
-  "private": true,
   "bugs": {
-    "url": "https://github.com/LukasHechenberger/xml/issues"
+    "url": "https://github.com/ls-age/xml/issues"
   },
-  "homepage": "https://github.com/LukasHechenberger/xml#readme",
+  "homepage": "https://github.com/ls-age/xml#readme",
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-preset-env": "^1.5.2",
