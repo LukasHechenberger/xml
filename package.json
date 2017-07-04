@@ -7,6 +7,7 @@
     "compile": "babel src -d out",
     "compile:watch": "npm run -s compile -- --watch",
     "docs": "esdoc",
+    "prepublishOnly": "npm run -s compile && npm run -s docs",
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "repository": {
