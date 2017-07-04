@@ -3,7 +3,7 @@ import Builder from '../Builder';
 
 export default class TextNode extends Node {
 
-  constructor(options) {
+  constructor(options = {}) {
     super(options);
 
     this._text = options.text;

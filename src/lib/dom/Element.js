@@ -46,7 +46,7 @@ export default class Element extends Node {
   static get recursiveChildElements() { return recursiveChildElements; }
   static get elementGetters() { return elementGetters; }
 
-  constructor(options) {
+  constructor(options = {}) {
     super(options);
 
     this._tagName = options.name;

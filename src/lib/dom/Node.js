@@ -13,7 +13,7 @@ export default class Node {
   static get info() { return info; }
   static get recursiveChildNodes() { return recursiveChildNodes; }
 
-  constructor(options) {
+  constructor(options = {}) {
     this._parent = options.parent;
     this._childNodes = [];
   }
