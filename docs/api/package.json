@@ -1,6 +1,6 @@
 {
   "name": "@ls-age/xml",
-  "version": "0.1.4",
+  "version": "0.1.3",
   "description": "Modify XML documents in node.js with ease",
   "main": "out/index.js",
   "scripts": {
