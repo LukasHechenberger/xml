@@ -77,7 +77,6 @@ export default class Parser {
 
   onProcessingInstruction(pi) {
     this._processingInstructions.push(pi);
-    console.log('<?' + pi.name, pi.body, '?>');
   }
 
   onText(text) {
@@ -90,10 +89,7 @@ export default class Parser {
         parent: this._currentElement,
         text,
       }, this));
-
-      console.log('  '.repeat(this._indent) + '#text');
     }
-    // console.log('TEXT', text);
   }
 
   onOpenTag(tag) {
@@ -112,12 +108,10 @@ export default class Parser {
     }
 
     this._currentElement = elm;
-    console.log('  '.repeat(this._indent++) + '<' + tag.name + '>');
   }
 
-  onCloseTag(tag) {
+  onCloseTag() {
     this._currentElement = this._currentElement.parentNode;
-    console.log('  '.repeat(--this._indent) + '</' + tag + '>');
   }
 
   onCData(cdata) {
@@ -125,7 +119,6 @@ export default class Parser {
       parent: this._currentElement,
       text: cdata,
     }, this));
-    console.log('  '.repeat(this._indent) + '#cdata', cdata);
   }
 
 }
