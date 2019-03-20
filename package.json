@@ -36,12 +36,12 @@
     "babel-cli": "^6.24.1",
     "babel-preset-env": "^1.5.2",
     "babel-register": "^6.24.1",
-    "esdoc": "^0.5.2",
+    "esdoc": "^1.1.0",
     "esdoc-uploader": "^1.0.1",
-    "eslint": "^4.0.0",
-    "eslint-config-lsage": "^0.2.0",
-    "mocha": "^3.4.2",
-    "unexpected": "^10.31.0"
+    "eslint": "^5.15.3",
+    "eslint-config-lsage": "^0.3.0",
+    "mocha": "^6.0.2",
+    "unexpected": "^11.2.0"
   },
   "eslintConfig": {
     "extends": "lsage"
