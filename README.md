@@ -2,7 +2,7 @@
 
 > Modify XML documents in node.js with ease
 
-[![CircleCI](https://circleci.com/gh/ls-age/xml.svg?style=svg)](https://circleci.com/gh/ls-age/xml)
+[![CircleCI](https://circleci.com/gh/ls-age/xml.svg?style=svg)](https://circleci.com/gh/ls-age/xml) [![Greenkeeper badge](https://badges.greenkeeper.io/ls-age/xml.svg)](https://greenkeeper.io/)
 
 An XML parsing, manipulation and serialization library. Implements some very basic DOM APIs *(By far not complete)*.
 
